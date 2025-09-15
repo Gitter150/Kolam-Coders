@@ -1,0 +1,18 @@
+# requirements.txt
+
+# --- Core Libraries for MVP ---
+opencv-python-headless  # For image processing (headless is smaller, good for servers)
+numpy                   # For numerical operations and matrix manipulation
+matplotlib              # For plotting and generating kolam images
+
+# --- Libraries for Advanced Features & Future Use ---
+Pillow                  # Powerful image manipulation library (PIL)
+scipy                   # For advanced scientific and geometric algorithms
+networkx                # For graph-based analysis of kolam paths
+
+# --- For the Web Interface (Stretch Goal) ---
+Flask                   # To build a simple web server and API
+
+# --- Developer Tools (Optional but Recommended) ---
+black                   # For auto-formatting your code
+flake8                  # For checking your code against style guides
