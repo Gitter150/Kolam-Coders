@@ -39,7 +39,7 @@ Our solution is divided into two main components:
 
 1.  **Clone the repository:**
     ```sh
-    git clone https://github.com/your-username/Kolam.git
+    https://github.com/Gitter150/Kolam-Coders
     cd Kolam
     ```
 
