@@ -1,55 +1,49 @@
 # Kolam Koders
 
-An exploration into the mathematical DNA of traditional Kolam art, developed for the Smart India Hackathon 2025.  
-This project aims to analyze the design principles of Kolams and procedurally generate new, authentic designs.
+An exploration into the mathematical DNA of traditional Kolam art, developed for the Smart India Hackathon 2025. This project uses a modular system of motifs and a symmetry engine to procedurally generate new, authentic, and complex Kolam designs from a simple seed value.
 
-- **Event:** Smart India Hackathon 2025  
-- **Problem Statement ID:** SIH12507  
-- **Theme:** Heritage and Culture  
+- **Event:** Smart India Hackathon 2025
+- **Problem Statement ID:** SIH12507
+- **Theme:** Heritage and Culture
+
+
 
 ## Core Features
 
-Our solution is divided into two main components:
-
-1.  **Analysis Engine**: Upload an image of a Kolam, and the program will extract its fundamental design principles, such as:
-    * Grid structure and dot matrix  
-    * Symmetry type (rotational, reflectional)  
-    * Stroke and path patterns  
-2.  **Generation Engine**: Specify a set of mathematical rules (e.g., "7x7 grid, 4-fold rotational symmetry, single stroke"), and the program will generate a valid, high-resolution Kolam that adheres to them.
+- **Procedural Generation Engine**: Specify a seed value (any text or number) to generate a unique, intricate, and aesthetically pleasing Kolam. The engine combines a library of artistic motifs with a 4-fold symmetry system to create dense and beautiful patterns.
+- **Web Interface**: A clean, simple web UI built with Flask to interact with the generator. Enter a seed, generate a Kolam in real-time, and download the high-resolution result.
+- **Analysis Engine (MVP)**: A proof-of-concept analyzer that can determine the grid size and primary symmetries of a clean, digital Kolam image.
 
 ## Tech Stack
 
--   **Backend**: Python  
--   **Frontend**: HTML5 Canvas  
--   **Key Python Libraries**:  
-    -   OpenCV (Image Processing)  
-    -   NumPy (Computation)  
-    -   Matplotlib/PIL (Image Generation)  
-    -   SciPy (Geometric Algorithms)  
-    -   NetworkX (Graph-based Path Analysis)  
+-   **Backend**: Python, Flask
+-   **Core Python Libraries**:
+    -   Matplotlib
+    -   NumPy
+    -   OpenCV
 
 ## Getting Started
 
 ### Prerequisites
 
--   Python 3.8+  
--   `pip` and `venv`  
+-   Python 3.8+
+-   `pip` and `venv`
 
 ### Installation & Setup
 
 1.  **Clone the repository:**
     ```sh
-    git clone https://github.com/your-username/Kolam.git
-    cd Kolam
+    git clone https://github.com/Gitter150/Kolam-Coders.git
+    cd Kolam-Coders
     ```
 
 2.  **Create and activate a virtual environment:**
-    * On macOS/Linux:
+    -   On macOS/Linux:
         ```sh
         python3 -m venv venv
         source venv/bin/activate
         ```
-    * On Windows:
+    -   On Windows:
         ```sh
         py -m venv venv
         .\venv\Scripts\activate
@@ -60,6 +54,18 @@ Our solution is divided into two main components:
     pip install -r requirements.txt
     ```
 
+---
+
 ### Running the Application
 
-*(Instructions on how to run your Flask server will go here once it's built)*
+1.  **Start the Flask web server:**
+    ```sh
+    python app.py
+    ```
+
+2.  **Open your web browser:**
+    Navigate to the local address provided in the terminal, which will be:
+    [http://127.0.0.1:5000](http://127.0.0.1:5000)
+
+3.  **Generate a Kolam:**
+    Enter any text or number into the seed input box and click the "Generate Kolam" button. The generated image will appear below, with an option to download it.
