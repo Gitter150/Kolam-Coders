@@ -1,3 +1,5 @@
+import matplotlib
+matplotlib.use('Agg') # Add this line to set the backend
 import matplotlib.pyplot as plt
 from matplotlib.path import Path
 from matplotlib.patches import PathPatch
@@ -139,7 +141,7 @@ class KolamGenerator:
         self.add_curve(base_dot_coords, tip_dot_coords, c2)
 
 
-    def generate_from_seed(self, seed, num_motifs=5):
+    def generate_from_seed(self, seed, num_motifs=5, output_path=None):
         """
         Generates a dense, symmetric kolam with varied motif sizes.
         Motifs closer to the center are drawn with a larger radius.
@@ -200,8 +202,10 @@ class KolamGenerator:
                     chosen_motif_func(anchor_point)
 
         # --- Apply symmetry and render ---
-        output_filename = f"data/output/kolam_seed_{seed}.png"
-        self.apply_4_fold_symmetry_and_render(output_path=output_filename)
+        # If an output_path isn't provided, use the old default behavior
+        if output_path is None:
+            output_path = f"data/output/kolam_seed_{seed}.png"
+        self.apply_4_fold_symmetry_and_render(output_path=output_path)
 
     def apply_4_fold_symmetry_and_render(self, output_path="data/output/symmetric_kolam.png"):
         """Renders the final kolam by applying 4-fold rotational symmetry."""

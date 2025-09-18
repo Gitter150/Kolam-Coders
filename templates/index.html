@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kolam Koders Generator</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        #container {
+            background: #1e1e1e;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 600px;
+        }
+        h1 {
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: calc(100% - 24px);
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            border: 1px solid #333;
+            background: #2a2a2a;
+            color: #e0e0e0;
+            font-size: 16px;
+        }
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            background: #007bff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        #kolam-display {
+            margin-top: 30px;
+            background: #000;
+            padding: 20px;
+            border-radius: 8px;
+            min-height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #kolam-image {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 4px;
+        }
+        #download-link {
+            display: none; /* Hidden by default */
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Kolam Generator</h1>
+        <input type="text" id="seed-input" placeholder="Enter a seed (e.g., 'sih2025')">
+        <button id="generate-btn">Generate Kolam</button>
+
+        <div id="kolam-display">
+            <img id="kolam-image" src="" alt="Generated Kolam will appear here">
+        </div>
+
+        <a id="download-link" href="#" download="kolam.png">Download Image</a>
+    </div>
+
+    <script>
+        document.getElementById('generate-btn').addEventListener('click', async () => {
+            const seed = document.getElementById('seed-input').value;
+            const imageElement = document.getElementById('kolam-image');
+            const downloadLink = document.getElementById('download-link');
+
+            imageElement.src = ""; // Clear previous image
+            downloadLink.style.display = 'none';
+
+            // Send seed to the backend
+            const response = await fetch('/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    seed: seed,
+                    grid_size: 13, // You can make these inputs too!
+                    num_motifs: 7
+                }),
+            });
+
+            const data = await response.json();
+            
+            // Update the image source and download link
+            imageElement.src = data.image_url;
+            downloadLink.href = data.image_url;
+            downloadLink.style.display = 'inline-block'; // Make the download button visible
+        });
+    </script>
+</body>
+</html>
