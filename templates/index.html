@@ -5,120 +5,489 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kolam Koders Generator</title>
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: #121212;
-            color: #e0e0e0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+        * {
             margin: 0;
-            text-align: center;
+            padding: 0;
+            box-sizing: border-box;
         }
-        #container {
-            background: #1e1e1e;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            width: 90%;
-            max-width: 600px;
-        }
-        h1 {
-            color: #ffffff;
-            margin-bottom: 20px;
-        }
-        input[type="text"] {
-            width: calc(100% - 24px);
-            padding: 12px;
-            margin-bottom: 20px;
-            border-radius: 6px;
-            border: 1px solid #333;
-            background: #2a2a2a;
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
             color: #e0e0e0;
-            font-size: 16px;
-        }
-        button {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 6px;
-            background: #007bff;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background: #0056b3;
-        }
-        #kolam-display {
-            margin-top: 30px;
-            background: #000;
-            padding: 20px;
-            border-radius: 8px;
-            min-height: 300px;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
+            overflow-x: hidden;
         }
+
+        /* Animated background pattern */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><circle cx="30" cy="30" r="1" fill="%23ffffff" opacity="0.1"/></g></svg>');
+            animation: float 20s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        #container {
+            background: rgba(30, 30, 46, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 60px 50px;
+            border-radius: 24px;
+            box-shadow: 
+                0 25px 50px -12px rgba(0, 0, 0, 0.8),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+            width: 90%;
+            max-width: 700px;
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Glowing border effect */
+        #container::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            border-radius: 26px;
+            z-index: -1;
+            opacity: 0.6;
+            filter: blur(6px);
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            0% { opacity: 0.6; }
+            100% { opacity: 0.8; }
+        }
+
+        h1 {
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-align: center;
+            letter-spacing: -0.02em;
+            animation: shimmer 2s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #a0a0a0;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+            font-weight: 300;
+        }
+
+        .input-group {
+            margin-bottom: 30px;
+        }
+
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            color: #b0b0b0;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 16px 20px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: rgba(42, 42, 58, 0.8);
+            color: #e0e0e0;
+            font-size: 16px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #4ecdc4;
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.3);
+            transform: translateY(-2px);
+        }
+
+        input::placeholder {
+            color: #666;
+        }
+
+        .generate-btn {
+            width: 100%;
+            padding: 18px 36px;
+            border: none;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .generate-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(78, 205, 196, 0.4);
+        }
+
+        .generate-btn:hover::before {
+            left: 100%;
+        }
+
+        .generate-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .generate-btn:disabled {
+            opacity: 0.6;
+            transform: none;
+            cursor: not-allowed;
+        }
+
+        #kolam-display {
+            margin-top: 40px;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(20, 20, 40, 0.8));
+            padding: 30px;
+            border-radius: 20px;
+            min-height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #kolam-display::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('data:image/svg+xml,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="1" fill="%23ffffff" opacity="0.05"/></svg>');
+            pointer-events: none;
+        }
+
         #kolam-image {
             max-width: 100%;
-            max-height: 400px;
-            border-radius: 4px;
+            max-height: 500px;
+            border-radius: 12px;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 1;
         }
+
+        #kolam-image.loaded {
+            animation: fadeInScale 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .placeholder-text {
+            color: #666;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .download-section {
+            margin-top: 30px;
+            text-align: center;
+            display: none;
+        }
+
         #download-link {
-            display: none; /* Hidden by default */
-            margin-top: 20px;
-            padding: 10px 20px;
-            background: #28a745;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #28a745, #20c997);
             color: white;
             text-decoration: none;
-            border-radius: 6px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        #download-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(78, 205, 196, 0.3);
+            border-top: 4px solid #4ecdc4;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            display: none;
+            padding: 15px;
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+            color: #ff6b6b;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            #container {
+                padding: 40px 30px;
+                margin: 20px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .input-row {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
         }
     </style>
 </head>
 <body>
     <div id="container">
-        <h1>Kolam Generator</h1>
-        <input type="text" id="seed-input" placeholder="Enter a seed (e.g., 'sih2025')">
-        <button id="generate-btn">Generate Kolam</button>
+        <h1>✨ Kolam Generator</h1>
+        <p class="subtitle">Create beautiful traditional patterns with AI</p>
+        
+        <form id="kolam-form">
+            <div class="input-group">
+                <div class="input-row">
+                    <div class="full-width">
+                        <label for="seed-input">Pattern Seed</label>
+                        <input type="text" id="seed-input" placeholder="Enter a seed (e.g., 'sih2025', 'festival', 'joy')" required>
+                    </div>
+                </div>
+                
+                <div class="input-row">
+                    <div>
+                        <label for="grid-size">Grid Size</label>
+                        <select id="grid-size">
+                            <option value="9">Small (9x9)</option>
+                            <option value="13" selected>Medium (13x13)</option>
+                            <option value="17">Large (17x17)</option>
+                            <option value="21">Extra Large (21x21)</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="num-motifs">Number of Motifs</label>
+                        <input type="number" id="num-motifs" min="3" max="15" value="7">
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="generate-btn" id="generate-btn">
+                Generate Kolam
+            </button>
+        </form>
+
+        <div class="error-message" id="error-message"></div>
 
         <div id="kolam-display">
-            <img id="kolam-image" src="" alt="Generated Kolam will appear here">
+            <div class="loading-spinner" id="loading-spinner"></div>
+            <div class="placeholder-text" id="placeholder-text">Your beautiful Kolam pattern will appear here</div>
+            <img id="kolam-image" src="" alt="Generated Kolam" style="display: none;">
         </div>
 
-        <a id="download-link" href="#" download="kolam.png">Download Image</a>
+        <div class="download-section" id="download-section">
+            <a id="download-link" href="#" download="kolam.png">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 16l-5-5h3V4h4v7h3l-5 5zm9-13h-6v1.99h6v14.03H3V4.99h6V3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
+                </svg>
+                Download Kolam
+            </a>
+        </div>
     </div>
 
     <script>
-        document.getElementById('generate-btn').addEventListener('click', async () => {
-            const seed = document.getElementById('seed-input').value;
-            const imageElement = document.getElementById('kolam-image');
-            const downloadLink = document.getElementById('download-link');
+        const form = document.getElementById('kolam-form');
+        const seedInput = document.getElementById('seed-input');
+        const gridSizeSelect = document.getElementById('grid-size');
+        const numMotifsInput = document.getElementById('num-motifs');
+        const generateBtn = document.getElementById('generate-btn');
+        const errorMessage = document.getElementById('error-message');
+        const kolamDisplay = document.getElementById('kolam-display');
+        const loadingSpinner = document.getElementById('loading-spinner');
+        const placeholderText = document.getElementById('placeholder-text');
+        const kolamImage = document.getElementById('kolam-image');
+        const downloadSection = document.getElementById('download-section');
+        const downloadLink = document.getElementById('download-link');
 
-            imageElement.src = ""; // Clear previous image
-            downloadLink.style.display = 'none';
+        // Sample seeds for inspiration
+        const sampleSeeds = ['sih2025', 'festival', 'prosperity', 'harmony', 'celebration', 'tradition', 'joy', 'peace'];
 
-            // Send seed to the backend
-            const response = await fetch('/generate', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ 
-                    seed: seed,
-                    grid_size: 13, // You can make these inputs too!
-                    num_motifs: 7
-                }),
-            });
+        // Add placeholder rotation
+        function rotatePlaceholder() {
+            const randomSeed = sampleSeeds[Math.floor(Math.random() * sampleSeeds.length)];
+            seedInput.placeholder = `Enter a seed (e.g., '${randomSeed}')`;
+        }
 
-            const data = await response.json();
+        // Rotate placeholder every 3 seconds
+        setInterval(rotatePlaceholder, 3000);
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        function setLoading(loading) {
+            if (loading) {
+                generateBtn.disabled = true;
+                generateBtn.textContent = 'Generating...';
+                loadingSpinner.style.display = 'block';
+                placeholderText.style.display = 'none';
+                kolamImage.style.display = 'none';
+                downloadSection.style.display = 'none';
+            } else {
+                generateBtn.disabled = false;
+                generateBtn.textContent = 'Generate Kolam';
+                loadingSpinner.style.display = 'none';
+            }
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
             
-            // Update the image source and download link
-            imageElement.src = data.image_url;
-            downloadLink.href = data.image_url;
-            downloadLink.style.display = 'inline-block'; // Make the download button visible
+            const seed = seedInput.value.trim();
+            const gridSize = parseInt(gridSizeSelect.value);
+            const numMotifs = parseInt(numMotifsInput.value);
+
+            if (!seed) {
+                showError('Please enter a pattern seed');
+                return;
+            }
+
+            if (numMotifs < 3 || numMotifs > 15) {
+                showError('Number of motifs must be between 3 and 15');
+                return;
+            }
+
+            setLoading(true);
+            errorMessage.style.display = 'none';
+
+            try {
+                const response = await fetch('/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        seed: seed,
+                        grid_size: gridSize,
+                        num_motifs: numMotifs
+                    }),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                // Show the generated image
+                kolamImage.src = data.image_url;
+                kolamImage.style.display = 'block';
+                kolamImage.classList.add('loaded');
+                
+                // Update download link
+                downloadLink.href = data.image_url;
+                downloadLink.download = `kolam-${seed}-${Date.now()}.png`;
+                downloadSection.style.display = 'block';
+                
+                placeholderText.style.display = 'none';
+                
+            } catch (error) {
+                console.error('Error generating Kolam:', error);
+                showError(`Failed to generate Kolam: ${error.message}`);
+                placeholderText.style.display = 'block';
+            } finally {
+                setLoading(false);
+            }
         });
+
+        // Remove loaded class after animation
+        kolamImage.addEventListener('animationend', () => {
+            kolamImage.classList.remove('loaded');
+        });
+
+        // Auto-focus on seed input
+        seedInput.focus();
     </script>
 </body>
 </html>
