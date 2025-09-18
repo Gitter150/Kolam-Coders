@@ -33,7 +33,7 @@ An exploration into the mathematical DNA of traditional Kolam art, developed for
 
 1.  **Clone the repository:**
     ```sh
-    git clone https://github.com/your-username/Kolam.git
+    git clone https://github.com/Gitter150/Kolam.git
     cd Kolam
     ```
 
